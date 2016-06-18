@@ -14,6 +14,24 @@ import {
 } from 'react-native';
 
 const BMICalculator = React.createClass( {
+  getInitialState: function() {
+    return {
+      showResult: false,
+      weight: 50,
+      height: 1.80,
+      BMI: 0,
+    }
+  },
+  calculateBMI: function() {
+    weight = this.state.weight
+    height = this.state.height
+    BMI = weight/(Math.pow(height, 2))
+    this.setState({
+      showResult: true,
+      BMI: BMI
+    })
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -21,13 +39,23 @@ const BMICalculator = React.createClass( {
           style={styles.title}>
           BMI calculator
         </Text>
+        <Text style={styles.label}>weight:</Text>
         <TextInput
+         defaultValue="0"
          keyboardType="numeric"
-         ref="textFromInput"
+         ref="weight"
          style={styles.inputs}/>
-        <TouchableHighlight>
-          <Text style={styles.button}>Ok</Text>
+        <Text style={styles.label}>height:</Text>
+        <TextInput
+         defaultValue="0"
+         keyboardType="numeric"
+         ref="height"
+         style={styles.inputs}/>
+        <TouchableHighlight
+          onPress={this.calculateBMI}>
+          <Text style={styles.button}>Calculate</Text>
         </TouchableHighlight>
+        <Text style={styles.result}>{this.state.showResult == true ? this.state.BMI : null }</Text>
       </View>
     )
   }
@@ -55,7 +83,8 @@ const styles = StyleSheet.create({
     width: 200,
     fontSize: 16,
     padding: 4,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    margin: 10
   },
   button: {
     backgroundColor: '#e0c1c1',
@@ -66,6 +95,15 @@ const styles = StyleSheet.create({
     width: 100,
     textAlign: 'center',
     textAlignVertical: 'center'
+  },
+  result: {
+    fontSize: 20,
+    color: '#fff'
+  },
+  label: {
+    fontSize: 16,
+    color: '#fff',
+    margin: 5
   }
 });
 
