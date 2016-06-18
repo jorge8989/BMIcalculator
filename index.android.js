@@ -18,18 +18,27 @@ const BMICalculator = React.createClass( {
     return {
       showResult: false,
       weight: 50,
-      height: 1.80,
+      height: 180,
       BMI: 0,
+      message: null
     }
   },
   calculateBMI: function() {
     weight = this.state.weight
     height = this.state.height
-    BMI = weight/(Math.pow(height, 2))
-    this.setState({
-      showResult: true,
-      BMI: BMI
-    })
+    if (weight.length > 0 && height.length > 0) {
+      BMI = weight/(Math.pow((height/100), 2))
+      this.setState({
+        showResult: true,
+        BMI: BMI,
+        message: null
+      })
+    } else {
+      this.setState({
+        message: "please fill all the fields",
+        showResult: false
+      })
+    }
   },
 
   render: function() {
@@ -40,22 +49,23 @@ const BMICalculator = React.createClass( {
           BMI calculator
         </Text>
         <Text style={styles.label}>weight:</Text>
+
         <TextInput
-         defaultValue="0"
+         onChangeText={(text) => this.setState({weight: text}) }
          keyboardType="numeric"
-         ref="weight"
          style={styles.inputs}/>
-        <Text style={styles.label}>height:</Text>
+
+        <Text style={styles.label}>height(cm):</Text>
+
         <TextInput
-         defaultValue="0"
+         onChangeText={(text) => this.setState({height: text}) }
          keyboardType="numeric"
-         ref="height"
          style={styles.inputs}/>
         <TouchableHighlight
           onPress={this.calculateBMI}>
           <Text style={styles.button}>Calculate</Text>
         </TouchableHighlight>
-        <Text style={styles.result}>{this.state.showResult == true ? this.state.BMI : null }</Text>
+        <Text style={styles.result}>{this.state.showResult == true ? this.state.BMI : this.state.message }</Text>
       </View>
     )
   }
