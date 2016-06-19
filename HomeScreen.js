@@ -8,7 +8,7 @@ import {
 
 import styles from './styles';
 
-const BMICalculator = React.createClass( {
+const HomeScreen = React.createClass( {
   getInitialState: function() {
     return {
       showResult: false,
@@ -66,4 +66,4 @@ const BMICalculator = React.createClass( {
   }
 })
 
-export default BMICalculator;
+export default HomeScreen;
